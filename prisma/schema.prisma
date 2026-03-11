@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model ApiKey {
+  id         String     @id
+  name       String
+  keyHash    String     @unique
+  keyPrefix  String
+  scopes     Scope[]
+  userId     String
+  expiresAt  DateTime?
+  lastUsedAt DateTime?
+  revokedAt  DateTime?
+  createdAt  DateTime   @default(now())
+  User       User       @relation(fields: [userId], references: [id])
+  UsageLog   UsageLog[]
+}
+
+model UsageLog {
+  id        String   @id
+  keyId     String
+  userId    String
+  endpoint  String
+  status    Int
+  createdAt DateTime @default(now())
+  ApiKey    ApiKey   @relation(fields: [keyId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id             String     @id
+  email          String     @unique
+  organizationId String?
+  role           Role       @default(MEMBER)
+  createdAt      DateTime   @default(now())
+  ApiKey         ApiKey[]
+  UsageLog       UsageLog[]
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum Scope {
+  READ
+  WRITE
+  ADMIN
+}
