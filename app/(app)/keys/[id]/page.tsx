@@ -11,7 +11,7 @@ export default async function KeyDetailsPage(props: { params: Promise<{ id: stri
   let keyData;
   try {
     keyData = await getApiKeyDetails(id);
-  } catch (error) {
+  } catch {
     notFound();
   }
 
@@ -148,7 +148,7 @@ export default async function KeyDetailsPage(props: { params: Promise<{ id: stri
               <div className="py-12 flex flex-col items-center justify-center text-center">
                 <ListOrdered className="h-10 w-10 text-zinc-300 dark:text-zinc-700 mb-4" />
                 <h4 className="text-sm font-medium text-zinc-900 dark:text-zinc-50">No usage data</h4>
-                <p className="text-sm text-zinc-500 mt-1">This key hasn't been used yet.</p>
+                <p className="text-sm text-zinc-500 mt-1">This key hasn&apos;t been used yet.</p>
               </div>
             )}
           </div>

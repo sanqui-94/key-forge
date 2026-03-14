@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { auth, currentUser } from "@clerk/nextjs/server";
-import { Scope } from "@prisma/client";
+import { Scope, UsageLog } from "@prisma/client";
 import { randomBytes, createHash } from "crypto";
 import { upsertUser } from "@/lib/services/user.service";
 
@@ -164,6 +164,7 @@ export async function getApiKeyDetails(keyId: string) {
   }
 
   // Sanitize to not return hash
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { keyHash, ...safeKeyData } = key;
-  return safeKeyData as typeof safeKeyData & { UsageLog?: any[] };
+  return safeKeyData as typeof safeKeyData & { UsageLog: UsageLog[] };
 }

@@ -53,7 +53,7 @@ export async function POST(request: Request) {
     let bodyData;
     try {
       bodyData = await request.json();
-    } catch (e) {
+    } catch {
       // Body is not valid JSON or doesn't exist, ignore
     }
 
